@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>The NLP Project Store</title>
+        <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon_robot.webp') }}" type="image/x-icon">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/base_style.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
+        {% block head %}
+        {% endblock %}
+    </head>
+    <body>
+        <header>
+            <nav>
+                <ul>
+                    <li id="categories_icon" class="button"><img src="{{ url_for('static', filename='images/bars-solid.svg') }}" alt=""></li>
+                    <li id="site-name">
+                        <a href="{{url_for('index')}}">
+                            The <span>NLP</span> <span>Project</span> Store
+                        </a>
+                    </li>
+                    <li id="profile" class="nav_profile_buttons">
+                        {% if username %}
+                            <a href="{{url_for('profile', username=username)}}" class="button">
+                        {% else %}
+                            <a href="{{url_for('login')}}" class="button">
+                        {% endif %}
+                                <p>PROFILE</p>
+                                <img src="{{ url_for('static', filename='images/user-regular.svg') }}" alt="">    
+                            </a>
+                    </li>
+                    <li id="cart" class="nav_profile_buttons">
+                        <a href="{{url_for('cart')}}" class="button">
+                            <p>CART</p>
+                            <img src="{{ url_for('static', filename='images/cart-shopping-solid.svg') }}" alt="">
+                        </a>
+                    </li>
+                    <li id="chatbot_button" class="nav_profile_buttons">
+                        <p>CHATBOT</p>
+                        <img id="chatbot_icon" src="{{ url_for('static', filename='images/robot-solid.svg') }}" alt="">
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section id="categories_section" hidden>
+                <h2>Categories</h2>
+                <ul>
+                {% for product_type in product_types %}
+                    <li><a href="{{ url_for('category', product_type=product_type) }}">{{ product_type | capitalize }}</a></li>
+                {% endfor %}
+                </ul>
+            </section>
+            {% block content %}
+            {% endblock %}
+            <section id="chatbot_container">
+                <div id="messages_container">
+                    <ul>
+                        <li class="message_bubble_receive">
+                            {{greeting_day}} Welcome to the NLP Project Store! I'm an automated assistant designed to provide support and guidance. 
+                            <br><br>
+                            I can help you find products based on your preferences (size, color, type), 
+                            answer questions about our policies (including shipping, returns, and refunds), 
+                            and even assist you with your cart, order status, or any issues you might have with your package. Just ask away!
+                        </li>
+                    </ul>
+                </div>
+                <form method="POST" id="chat_form">
+                    {{ template_form.hidden_tag() }}
+                    <p id="message_input_label">{{ template_form.message.label }}</p>
+                    {{ template_form.message(placeholder="Write something...", class="message_form_buttons") }}
+                    <p>{{ template_form.send(class="message_form_buttons") }}</p>
+                </form>
+            </section>
+        </main>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    </body>
+</html>

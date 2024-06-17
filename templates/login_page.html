@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login_page_style.css') }}">
+{% endblock %}
+{% block content %}
+    <div class="section_container">
+            <form method="POST" id="login_form">
+                {{ login_form.csrf_token(id="csrf_token_login_form") }}
+                {{ login_form.username.label(class="login_form_fields_labels form_element") }}
+                {{ login_form.username(class="login_form_fields form_element", placeholder="Username") }}
+                {{ login_form.password.label(class="login_form_fields_labels form_element") }}
+                {{ login_form.password(class="login_form_fields form_element", placeholder="Password") }}
+                {{ login_form.login(class="form_element button") }}
+                <p {{incorrect_password}} class="warning_messages">Incorrect password!</p>
+                <p {{username_not_found}} class="warning_messages">No user found with this id!</p>
+            </form>
+    </div>
+{% endblock %}

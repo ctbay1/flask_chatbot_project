@@ -1,0 +1,313 @@
+@font-face {
+    font-family: "Roboto";
+    src: url(../fonts/roboto/Roboto-Regular.ttf);
+}
+
+*{
+    font-family: "Roboto", sans-serif;
+    text-align: center;
+}
+
+html,body{
+    height: 100%;
+    width: 100%;
+}
+
+html{
+    font-size: 10px;
+}
+
+[hidden]{
+    display: none !important;
+}
+
+nav{
+    color: white;
+    width: 100%;
+    height: 10rem;
+    background-color: black;
+    position: fixed;
+    top: 0;
+    z-index: 1;
+    letter-spacing: 0.25rem;
+}
+
+nav ul{
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+li{
+    list-style-type: none;
+}
+
+nav li{
+    margin: 0 2rem;
+}
+
+#categories_icon{
+    width: 3rem;
+    position: fixed;
+    left: 2rem;
+    z-index: 2;
+}
+
+#site-name{
+    width: 40%;
+    text-align:center;
+    font-size: 2.8rem;
+}
+
+#site-name span{
+    color: #4688EB;
+}
+
+.button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button:hover{
+    cursor: pointer;
+}
+
+.nav_profile_buttons{
+    margin: 0;
+    width: 12.5%;
+    height: 80%;
+    border-radius: 0.25rem;
+    color: white;
+    font-weight: 900;
+}
+
+.nav_profile_buttons a{
+    width: 100%;
+    height: 100%;
+}
+
+.nav_profile_buttons img{
+    margin-left: 1rem;
+    width: 3rem;
+}
+
+#chatbot_icon{
+    width: 4rem;
+}
+
+#profile{
+    border: solid #193052 0.25rem;
+    background-color: #193052;
+    
+}
+
+#cart{
+    margin-left: 0.5rem;
+    border: solid #4688EB 0.25rem;
+    background-color: #4688EB;
+}
+
+#cart p{
+    font-size: 2rem;
+}
+
+#chatbot_button{
+    width: 25%;
+    border-left: black solid 0.75rem;
+    border-right: black solid 0.75rem;
+    background-color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main{
+    height:calc(100% - 10rem);
+    position: relative;
+    top: 10rem;
+}
+
+.section_container{
+    width: 75%;
+    height: 100%;
+    float: left;
+    overflow-y: auto;
+    scrollbar-color: black white;
+}
+
+#chatbot_container{
+    width: 25%;
+    height: 100%;
+    border: black solid 0.75rem;
+    border-top: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    float: right;
+    overflow-y: auto;
+    scrollbar-color: black white;
+    scrollbar-width: thin;
+}
+/*
+#chatbot_container::-webkit-scrollbar{
+    background-color: white;
+    width: 0.75rem;
+}
+
+#chatbot_container::-webkit-scrollbar-thumb{
+    background: red;
+    border-radius: 0.75rem;
+}*/
+
+#messages_container{
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: stretch;
+}
+
+#messages_container li{
+    font-size: 1.4rem;
+    margin: 1rem 0.5rem;
+    padding: 0.5rem;
+}
+
+.message_bubble_receive{
+    text-align: left;
+    background-color:red;
+    border: 0.5rem solid red;
+    color: white;
+    border-radius: 1rem;
+}
+
+.message_bubble_send{
+    text-align: left;
+    background-color:#193052;
+    border: 0.5rem solid #193052;
+    color: white;
+    border-radius: 1rem;
+}
+
+/*message form buttons*/
+    /*message input box*/
+
+.message_form_buttons{
+    height: 4rem;
+    border-top: solid black 0.5rem;
+    border-right:solid black 0.5rem;
+}
+
+#message{
+    height: 4rem;
+    width: 80%;
+    float: left;
+    font-size: 1.4rem;
+    resize: none;
+}
+
+#send{
+    width: 20%;
+    border-top-right-radius: 0.5rem;
+    background-color: red;
+    color: white;
+}
+
+#send:hover{
+    cursor: pointer;
+}
+
+#message_input_label{
+    display: none;
+}
+
+.price{
+    font-weight: 600;
+}
+
+#categories_section{
+    position: absolute;
+    top: 0;
+    z-index: 3;
+    width: 20%;
+    height: auto;
+    padding: 2rem;
+    border: black solid 0.5rem;
+    border-top: none;
+    border-left: none;
+    border-bottom-right-radius: 0.5rem;
+    background-color: white;
+}
+
+#categories_section li{
+    margin: 1rem 0;
+    border: black solid 0.125rem;
+    border-radius: 0.25rem;
+}
+
+#categories_section li a{
+    display: block;
+    width: 100%;
+}
+
+/* used in product_page_style and cart_page_style */
+.product_container{
+    border: black solid 0.5rem;
+    border-radius: 0.5rem;
+    background-color: ghostwhite;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product_description{
+    border: solid black 0.25rem;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: left;
+}
+
+/*** Topography Styles ***/
+
+h1,h2,h3,h4,h5,h6{
+    font-weight: 700;
+    margin: 1.5rem;
+    
+}
+
+h1{
+    font-size: 2.8rem;
+}
+
+h2{
+    font-size: 2.5rem;
+}
+
+h2.project_title{
+    font-size: 2.3rem;
+}
+
+h3 {
+    font-size: 2rem;
+}
+  
+h4, h5 {
+    font-size: 1.8rem;
+}
+  
+h6{
+    font-size: 1.6rem;
+}
+
+p{
+    font-size: 1.6rem;
+}
+
+li{
+    font-size: 2rem;
+}
+/************************/

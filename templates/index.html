@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index_style.css') }}">
+{% endblock %}
+{% block content %}
+<div class="section_container">
+    {% for product in products %}
+        {% if product['stock_quantity'] > 0 %}
+            <div class="product_item">
+                <a href="{{ url_for('product_page', product_type=product['name'], productSize_and_color=product['size'] + '_and_' + product['color']) }}">
+                    <img src="{{ url_for('static', filename='images/product_images/' + product['image_filename'] + '.jpg') }}" alt="{{ product['name'] }}">
+                </a>
+                <h2>{{ product['name'] | capitalize }}</h2>
+                <p>{{ product['size'] | capitalize }}, {{ product['color'] | capitalize }}</p>
+                <p class="price">{{ product['price'] }}</p>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}

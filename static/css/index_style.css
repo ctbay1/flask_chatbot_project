@@ -1,0 +1,28 @@
+html{
+    font-size: 10px;
+}
+
+.section_container {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 2rem;       /* Add spacing between items */
+    padding: 2rem;
+}
+
+.product_item {
+    border: 0.20rem solid black;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    width: 20rem;
+    margin: 1rem;
+    background-color: ghostwhite;
+}
+
+.product_item img {
+    border: 0.125rem solid black;
+    border-radius: 0.25rem;
+    max-width: 100%;
+    height: auto;
+}

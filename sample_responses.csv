@@ -1,0 +1,11 @@
+index,text,blank_spot,label,intent_label
+0,"In case you've forgotten your login credentials, you can reset your password by visiting this link: [{url}].",none,0,login_credentials
+1,"To view your order history and manage your settings, please log in to your account.",none,0,account_management
+2,"Our shipping information is available on our help center page: [{url}]. We offer complimentary standard shipping on all orders exceeding $50. For expedited shipping options, please visit our Shipping Information page.",none,0,shipping_info
+3,Here's the link to the {blank_spot} category you requested: [{url}],clothes,1,navigation
+4,Your {size} sized {color} {clothing} has been successfully added to your cart. Proceed to checkout to complete your purchase.,clothes,1,add_cart
+5,Great news! We have a {color} {clothing} in {size} available. You can check it out here: [url].,clothes,1,stock_info
+6,"To track your order, please provide your order number and we'll be happy to retrieve the status for you.",none,1,order_status
+7,"To assist you with your refund request, could you please provide your order number about your recent purchase?",none,1,refunds
+8,We're happy to assist you with your return. Please provide your order number of the item you wish to return.,none,1,returns
+9,"We're sorry to hear there's an issue with your package. Is it damaged, missing items, or perhaps not what you expected? Please provide your order number about your recent purchase.",none,1,package_issues

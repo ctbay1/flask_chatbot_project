@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cart_page_style.css') }}">
+{% endblock %}
+{% block content %}
+<div class="section_container">
+    <div class="order_total">
+        <h2> Order total: {{cart['order_total']}}</h2>
+    </div>
+    {% if cart['items'] %}
+        {% for product in cart['items'] %}
+            <div class="product_container">
+                <a href="{{ url_for('product_page', product_type=product['name'], productSize_and_color=product['size'] + '_and_' + product['color']) }}" class="product_detail">
+                    <img src="{{ url_for('static', filename='images/product_images/' + product['image_filename'] + '.jpg') }}" 
+                    alt="{{ product['name'] }}">
+                </a>
+                <div class="product_description product_detail">
+                    <h2> {{ product['name'] | capitalize }}  </h2>
+                    <p>Color: {{ product['color'] | capitalize}} </p>
+                    <p>Size: {{ product['size'] | capitalize}}  </p>
+                </div>
+                <p class="price product_detail"> {{ product['price'] }} </p>
+                <form method="post" id="select_quantity_form" name="select_quantity_form">
+                    <select name="quantity_selector" class="quantity_selector" type="submit" onchange="this.form.submit()">
+                        {% for i in range(product['stock_quantity'] + 1) %}
+                            {% if i == product['purchased_quantity'] %}
+                                <option value="{{ [i,product['cart_index']] }}" selected="selected">{{i}}</option>
+                            {% else %}
+                                <option value="{{ [i,product['cart_index']] }}">{{i}}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </form>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h2>Your cart is currently empty :&#40</h2>
+    {% endif %}
+</div>
+{% endblock %}

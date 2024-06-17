@@ -1,0 +1,3 @@
+index,username,password_hash,name,address,profile_picture,latest_order_number
+0,johndoe123,pbkdf2:sha256:260000$ypNEJ455ZueRWwvV$d208bbae98d64bbed57a4c36f985d7ccbea5eccf1967e633af1198c5c96dfe16,John Doe,none,none,100003
+1,hankhill,none,Hank Hill,none,none,none

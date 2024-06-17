@@ -1,0 +1,52 @@
+.section_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#login_form{
+    height: 50%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    border: solid black 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.form_element{
+    width: 50%;
+    height: 20%;
+    border-radius: 0.25rem;
+    font-size: 1.6rem;
+    text-align: left;
+    letter-spacing: 0.1rem;
+}
+
+.login_form_fields{
+    border: solid black 0.25rem;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.login_form_fields_labels{
+    text-align: left;
+    font-weight: 600;
+    height: fit-content;
+    margin-bottom: 0.25rem;
+}
+
+#login{
+    height: 25%;
+    border: #193052 solid 0.25rem;
+    background-color: #193052;
+    color: white;
+    text-align: center;
+    font-size: 1.8rem;
+}
+
+.warning_messages{
+    color: red;
+    font-weight: 700;
+}

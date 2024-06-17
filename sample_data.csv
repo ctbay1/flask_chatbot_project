@@ -1,0 +1,4 @@
+index,name,username,order_number,status,items,order_total,order_date,delivery_date
+0,John Doe,johndoe123,100001,shipped,"blue shirt m x1,black hat m x1",$29.98,2024-04-10,-
+1,Hank Hill,hankhill,100002,shipped,"white shirt xl x1,indigo jeans w36 x1",$54.98,2024-04-18,-
+2,John Doe,johndoe123,100003,processing,"black t-shirt m x2",$39.98,2024-06-15,-

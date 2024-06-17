@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile_page_style.css') }}">
+{% endblock %}
+{% block content %}
+    <div class="section_container">
+        <form method="post" id="log_out_form">
+            <input type="submit" value="LogOut" id="log_out" name="log_out" title="LogOut" class="button">
+        </form>
+        <div class="user_details">
+            <!--
+            <form method="post" id="image_upload_form" title="Click here to upload your image">
+                <label for="image_file"> -->
+                    <img src="{{ url_for('static', filename='images/user-regular.svg') }}" alt="" class="profile_picture button">
+                <!--
+                </label>
+                <input type="file" name="image_file" id="image_file" title="upload image" accept="image/*">
+            </form> -->
+            <div>
+                <h2>Name: {{ user_data['name'] | title }}</h2>
+                <p>Username: {{ user_data['username'] }}</p>
+            </div>
+        </div>
+        <h2>My Orders</h2>
+        {% for index in user_data['products_ordered'] %}
+        <div class="my_orders_section">
+            <div class="order_details">
+                <p> #{{ user_data['products_ordered'][index][0]['order_number'] }} </p>
+                <p>Order Total: {{ user_data['products_ordered'][index][0]['order_total'] }} </p>
+                <p>Order Date: {{ user_data['products_ordered'][index][0]['order_date'] }} </p>
+                <p>Order Status: {{ user_data['products_ordered'][index][0]['status'] | capitalize}} </p>
+            </div>
+            {% for product in user_data['products_ordered'][index] %}
+            <div class="product_container">
+                <a href="{{ url_for('product_page', product_type=product['name'], productSize_and_color=product['size'] + '_and_' + product['color']) }}" class="product_detail">
+                    <img src="{{ url_for('static', filename='images/product_images/' + product['image_filename'] + '.jpg') }}" 
+                    alt="{{ product['name'] }}">
+                </a>
+                <div class="product_description product_detail">
+                    <h2> {{ product['name'] | capitalize }}  </h2>
+                    <p>Color: {{ product['color'] | capitalize}} </p>
+                    <p>Size: {{ product['size'] | capitalize}}  </p>
+                </div>
+                <p class="price product_detail"> {{ product['price'] }} (x{{ product['purchased_quantity'] }})</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}        
+    </div>
+{% endblock %}

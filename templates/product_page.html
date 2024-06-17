@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/product_page_style.css') }}">
+{% endblock %}
+{% block content %}
+<div class="section_container">
+    <div class="product_container">
+        <div class="product_details">
+            <img src="{{ url_for('static', filename='images/product_images/' + product['image_filename'] + '.jpg') }}" alt="{{ product['name'] }}" class="product_detail">
+            <div class="product_description product_detail">
+                <h1> {{ product['name'] | capitalize }} </h1>
+                <p>Size: {{ product['size'] | capitalize }}</p>
+                <p>Color: {{ product['color'] | capitalize }}</p>
+                <p>Stock: {{ product['stock_quantity'] }}</p>
+                <p class="price">{{ product['price'] }}</p>    
+            </div> 
+        </div>
+        <form method="POST" id="cart_button_form">
+            <button type="submit" id="add_to_cart_button" name="add_to_cart_button" title="Add this item to your cart." value="Add to Cart" class="cart_button button">
+                <img src="{{ url_for('static', filename='images/cart-plus-solid.svg') }}" alt="">
+                <p>Add to Cart</p>
+            </button>
+        </form>
+        
+    </div>
+</div>
+{% endblock %}
