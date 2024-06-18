@@ -123,3 +123,16 @@ def get_part_of_the_day(current_time_obj):
     else:
         greeting_text = "Good Evening!"
     return greeting_text
+
+placeholder_messages_list = [
+  "How can I reset my password?",
+  "I forgot my password. Can you help me?",
+  "Do you sell hats?",
+  "Do you have any medium-sized red t-shirts in stock?",   
+  "What is my order status?",
+  "What is the latest update on my recent purchase?",
+  "Do you offer free shipping?",
+  "Where can I see my order history?",
+  "Can you add small denim shorts to my cart?",
+  "Could you put that white xl t-shirt to my shopping cart?"
+]
