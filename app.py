@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, g
+from flask import Flask, render_template, request, redirect, url_for, session
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField
 from wtforms.validators import DataRequired
@@ -6,7 +6,8 @@ from chatbot import ChatBot
 from user_defined import get_part_of_the_day
 from datetime import datetime
 import pandas as pd
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import check_password_hash
+import pickle
 
 products_df   = pd.read_csv('inventory.csv')
 product_types = list(products_df['name'].unique())
@@ -15,7 +16,6 @@ products      = products_df.to_dict('records')
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "mysecret"
 app.config['SESSION_TYPE'] = 'filesystem'
-chatbot = ChatBot()
 
 @app.before_request
 def before_request():
@@ -27,6 +27,8 @@ def before_request():
         session['hidden_username_error'] = "hidden"
     if 'hidden_password_error' not in session:
         session['hidden_password_error'] = "hidden"
+    if 'chatbot' not in session:
+        session['chatbot'] = pickle.dumps(ChatBot(), protocol=pickle.HIGHEST_PROTOCOL)
 
 class ChatbotForm(FlaskForm):
     message = StringField("Message", validators=[DataRequired()])
@@ -39,13 +41,17 @@ class LoginForm(FlaskForm):
 
 @app.route('/', methods=["GET", "POST"])
 def index():
+    chatbot = pickle.loads(session['chatbot'])
+
     greeting_day  = get_part_of_the_day(datetime.now())
     
     chatbot_form = ChatbotForm()
     if chatbot_form.validate_on_submit():
         new_response = chatbot.respond(chatbot_form.message.data)
+        session['chatbot'] = pickle.dumps(chatbot, protocol=pickle.HIGHEST_PROTOCOL)
         return new_response  # Return the JSON response for JavaScript to handle
     # Render the template for GET requests or when the form fails validation
+    session['chatbot'] = pickle.dumps(chatbot, protocol=pickle.HIGHEST_PROTOCOL)
     return render_template('index.html', 
                            product_types=product_types, 
                            template_form=chatbot_form, 
@@ -56,6 +62,7 @@ def index():
 
 @app.route('/product/<product_type>')
 def category(product_type):
+    chatbot = pickle.loads(session['chatbot'])
     greeting_day = get_part_of_the_day(datetime.now())
     
     the_same_type_of_products = products_df[products_df['name'] == product_type].to_dict('records')
@@ -63,8 +70,10 @@ def category(product_type):
     chatbot_form = ChatbotForm()
     if chatbot_form.validate_on_submit():
         new_response = chatbot.respond(chatbot_form.message.data)
+        session['chatbot'] = pickle.dumps(chatbot, protocol=pickle.HIGHEST_PROTOCOL)
         return new_response
     
+    session['chatbot'] = pickle.dumps(chatbot, protocol=pickle.HIGHEST_PROTOCOL)
     return render_template('index.html', 
                            product_types=product_types, 
                            template_form=chatbot_form, 
@@ -75,6 +84,8 @@ def category(product_type):
 
 @app.route('/product/<product_type>/<productSize_and_color>', methods=["GET", "POST"])
 def product_page(product_type, productSize_and_color):
+    chatbot = pickle.loads(session['chatbot'])
+
     greeting_day = get_part_of_the_day(datetime.now())
     
     size, color  = productSize_and_color.split('_and_')
@@ -85,6 +96,7 @@ def product_page(product_type, productSize_and_color):
     chatbot_form = ChatbotForm()
     if chatbot_form.validate_on_submit():
         new_response = chatbot.respond(chatbot_form.message.data)
+        session['chatbot'] = pickle.dumps(chatbot, protocol=pickle.HIGHEST_PROTOCOL)
         return new_response
     
     if request.method == "POST":
@@ -94,8 +106,11 @@ def product_page(product_type, productSize_and_color):
             chatbot.cart['items'].append(product)
             chatbot.cart['order_total'] = chatbot.get_cart_order_total(data_type='dict', item_price=product['price'], 
             purchased_quantity=product['purchased_quantity'], current_order_total=chatbot.cart['order_total'] )
+            
+            session['chatbot'] = pickle.dumps(chatbot, protocol=pickle.HIGHEST_PROTOCOL)
             return redirect(url_for('product_page', product_type=product_type, productSize_and_color=productSize_and_color))
 
+    session['chatbot'] = pickle.dumps(chatbot, protocol=pickle.HIGHEST_PROTOCOL)
     return render_template('product_page.html', 
                            product_types=product_types, 
                            template_form=chatbot_form, 
@@ -106,11 +121,14 @@ def product_page(product_type, productSize_and_color):
 
 @app.route('/cart', methods=["GET", "POST"])
 def cart():
+    chatbot = pickle.loads(session['chatbot'])
+
     greeting_day = get_part_of_the_day(datetime.now())
     
     chatbot_form = ChatbotForm()
     if chatbot_form.validate_on_submit():
         new_response = chatbot.respond(chatbot_form.message.data)
+        session['chatbot'] = pickle.dumps(chatbot, protocol=pickle.HIGHEST_PROTOCOL)
         return new_response
     
     if request.method == "POST":
@@ -123,12 +141,17 @@ def cart():
         if updated_quantity == 0:
             chatbot.cart['items'].pop(item_index_in_cart)
             chatbot.cart['order_total'] = chatbot.get_whole_cart_order_total(chatbot.cart['items'])
+            
+            session['chatbot'] = pickle.dumps(chatbot, protocol=pickle.HIGHEST_PROTOCOL)
             return redirect(url_for('cart'))
         else:
             chatbot.cart['items'][item_index_in_cart]['purchased_quantity'] = updated_quantity
             chatbot.cart['order_total'] = chatbot.get_whole_cart_order_total(chatbot.cart['items'])
+            
+            session['chatbot'] = pickle.dumps(chatbot, protocol=pickle.HIGHEST_PROTOCOL)
             return redirect(url_for('cart'))
     
+    session['chatbot'] = pickle.dumps(chatbot, protocol=pickle.HIGHEST_PROTOCOL)
     return render_template('cart_page.html', 
                            product_types=product_types, 
                            template_form=chatbot_form, 
@@ -139,8 +162,7 @@ def cart():
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
-    
-    
+    chatbot = pickle.loads(session['chatbot'])
 
     greeting_day     = get_part_of_the_day(datetime.now())
 
@@ -149,6 +171,7 @@ def login():
     chatbot_form = ChatbotForm()
     if chatbot_form.validate_on_submit():
         new_response = chatbot.respond(chatbot_form.message.data)
+        session['chatbot'] = pickle.dumps(chatbot, protocol=pickle.HIGHEST_PROTOCOL)
         return new_response
 
     def check_if_entered_username_exists(entered_username, registered_usernames_list):
@@ -179,6 +202,7 @@ def login():
             session['hidden_username_error'] = ""
             return redirect(url_for('login'))
     
+    session['chatbot'] = pickle.dumps(chatbot, protocol=pickle.HIGHEST_PROTOCOL)
     return render_template('login_page.html', 
                            product_types=product_types, 
                            template_form=chatbot_form, 
@@ -191,6 +215,8 @@ def login():
 
 @app.route('/profile/<username>', methods=["GET", "POST"])
 def profile(username):
+    chatbot = pickle.loads(session['chatbot'])
+
     if not session['user_logged_in']:
         return redirect(url_for('login'))
     
@@ -204,8 +230,10 @@ def profile(username):
     orders_data_filtered_by_username = orders_data[orders_data['username'] == username].to_dict('records')
     user_data['latest_order_number'] = orders_data_filtered_by_username[-1]['order_number']
     registered_users.at[user_idx_in_user_data, 'latest_order_number'] = user_data['latest_order_number']
+    
     chatbot.order_number = str(user_data['latest_order_number'])
-    print(chatbot.order_number)
+    session['chatbot'] = pickle.dumps(chatbot, protocol=pickle.HIGHEST_PROTOCOL)
+
     user_data['products_ordered'] = {}
     for order in orders_data_filtered_by_username:
         user_data['products_ordered'][str(order['index'])] = []
@@ -224,6 +252,7 @@ def profile(username):
     chatbot_form = ChatbotForm()
     if chatbot_form.validate_on_submit():
         new_response = chatbot.respond(chatbot_form.message.data)
+        session['chatbot'] = pickle.dumps(chatbot, protocol=pickle.HIGHEST_PROTOCOL)
         return new_response
 
     registered_users.to_csv('sample_users.csv', index=False)
@@ -233,7 +262,8 @@ def profile(username):
             session['user_logged_in']     = False
             session['username_for_route'] = ''
             return redirect(url_for('login'))
-
+    
+    session['chatbot'] = pickle.dumps(chatbot, protocol=pickle.HIGHEST_PROTOCOL)
     return render_template('profile_page.html', 
                            product_types=product_types, 
                            template_form=chatbot_form, 
