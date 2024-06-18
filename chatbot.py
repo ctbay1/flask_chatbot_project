@@ -134,22 +134,25 @@ class ChatBot:
             product_color_size_in_stock_quantity = self.is_product_with_size_and_color_in_inventory("stock_quantity", mentioned_product, mentioned_size, mentioned_color)
             if product_color_size_in_stock_quantity and product_color_size_in_stock_quantity > 0:
                 available_flag = True
-                return("Great news! We have a {color} {clothing} in {size} available. You can check it out here: [url]."
-                        .format(color=mentioned_color, clothing=mentioned_product, size=mentioned_size)),available_flag
+                url = "https://ctbay.pythonanywhere.com/product/{product_name}/{product_size}_and_{product_color}".format(
+                    product_name=mentioned_product, product_size=mentioned_size, product_color=mentioned_color)
+                return("Great news! We have a {color} {clothing} in {size} available. You can check it out here: [{url}]."
+                        .format(color=mentioned_color, clothing=mentioned_product, size=mentioned_size, url=url)),available_flag
             else:
                 list_of_available_sizes_for_mentioned_product  = sample_inventory[sample_inventory['name'] == mentioned_product]['size'].to_list()
                 list_of_available_colors_for_mentioned_product = sample_inventory[sample_inventory['name'] == mentioned_product]['color'].to_list()
                 list_of_available_size_and_color_pairs_for_mentioned_product = list(zip(list_of_available_sizes_for_mentioned_product, list_of_available_colors_for_mentioned_product))
+                url = "https://ctbay.pythonanywhere.com/product/{product_name}".format(product_name=mentioned_product)
                 if mentioned_color and mentioned_size:
                     return("I'm sorry to inform you that we don't have a {color} {clothing} in {size} available at the moment. "
-                        "However, we do have {clothing} in the following size and color pairs: {list_of_available_sizes}. "
-                        "Would you like to see those options instead? Here's the link: [url]."
+                        "However, we do have {clothing}(s) in the following size and color pairs: {list_of_available_sizes}. "
+                        "Would you like to see those options instead? Here's the link: [{url}]."
                         .format(color=mentioned_color, clothing=mentioned_product, size=mentioned_size, 
-                        list_of_available_sizes=list_of_available_size_and_color_pairs_for_mentioned_product)),available_flag
+                        list_of_available_sizes=list_of_available_size_and_color_pairs_for_mentioned_product,url=url)),available_flag
                 else:
-                    return("We do have {clothing} in the following size and color pairs: {list_of_available_sizes}. "
-                        "Would you like to see those options instead? Here's the link: [url]."
-                        .format(clothing=mentioned_product, list_of_available_sizes=list_of_available_size_and_color_pairs_for_mentioned_product)),available_flag
+                    return("We do have {clothing}(s) in the following size and color pairs: {list_of_available_sizes}. "
+                        "Would you like to see them? Here's the link: [{url}]."
+                        .format(clothing=mentioned_product, list_of_available_sizes=list_of_available_size_and_color_pairs_for_mentioned_product,url=url)),available_flag
         else:
             if mentioned_product:
                 return("Thank you for your inquiry! We don't sell {requested_item}, is there anything else I can help you find today?"
