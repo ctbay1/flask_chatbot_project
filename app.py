@@ -3,11 +3,12 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField
 from wtforms.validators import DataRequired
 from chatbot import ChatBot
-from user_defined import get_part_of_the_day
+from user_defined import get_part_of_the_day, placeholder_messages_list
 from datetime import datetime
 import pandas as pd
 from werkzeug.security import check_password_hash
 import pickle
+import numpy as np
 
 products_df   = pd.read_csv('inventory.csv')
 product_types = list(products_df['name'].unique())
@@ -43,7 +44,8 @@ class LoginForm(FlaskForm):
 def index():
     chatbot = pickle.loads(session['chatbot'])
 
-    greeting_day  = get_part_of_the_day(datetime.now())
+    greeting_day        = get_part_of_the_day(datetime.now())
+    placeholder_message = np.random.choice(placeholder_messages_list)
     
     chatbot_form = ChatbotForm()
     if chatbot_form.validate_on_submit():
@@ -57,13 +59,16 @@ def index():
                            template_form=chatbot_form, 
                            greeting_day=greeting_day, 
                            products=products, 
-                           username=session['username_for_route']
+                           username=session['username_for_route'],
+                           placeholder_message=placeholder_message
                            )
 
 @app.route('/product/<product_type>')
 def category(product_type):
     chatbot = pickle.loads(session['chatbot'])
-    greeting_day = get_part_of_the_day(datetime.now())
+
+    greeting_day        = get_part_of_the_day(datetime.now())
+    placeholder_message = np.random.choice(placeholder_messages_list)
     
     the_same_type_of_products = products_df[products_df['name'] == product_type].to_dict('records')
 
@@ -79,14 +84,16 @@ def category(product_type):
                            template_form=chatbot_form, 
                            greeting_day=greeting_day, 
                            products=the_same_type_of_products, 
-                           username=session['username_for_route']
+                           username=session['username_for_route'],
+                           placeholder_message=placeholder_message
                            )
 
 @app.route('/product/<product_type>/<productSize_and_color>', methods=["GET", "POST"])
 def product_page(product_type, productSize_and_color):
     chatbot = pickle.loads(session['chatbot'])
 
-    greeting_day = get_part_of_the_day(datetime.now())
+    greeting_day        = get_part_of_the_day(datetime.now())
+    placeholder_message = np.random.choice(placeholder_messages_list)
     
     size, color  = productSize_and_color.split('_and_')
 
@@ -116,14 +123,16 @@ def product_page(product_type, productSize_and_color):
                            template_form=chatbot_form, 
                            greeting_day=greeting_day, 
                            product=product, 
-                           username=session['username_for_route']
+                           username=session['username_for_route'],
+                           placeholder_message=placeholder_message
                            )
 
 @app.route('/cart', methods=["GET", "POST"])
 def cart():
     chatbot = pickle.loads(session['chatbot'])
 
-    greeting_day = get_part_of_the_day(datetime.now())
+    greeting_day        = get_part_of_the_day(datetime.now())
+    placeholder_message = np.random.choice(placeholder_messages_list)
     
     chatbot_form = ChatbotForm()
     if chatbot_form.validate_on_submit():
@@ -157,14 +166,16 @@ def cart():
                            template_form=chatbot_form, 
                            greeting_day=greeting_day, 
                            cart=chatbot.cart, 
-                           username=session['username_for_route']
+                           username=session['username_for_route'],
+                           placeholder_message=placeholder_message
                            )
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
     chatbot = pickle.loads(session['chatbot'])
 
-    greeting_day     = get_part_of_the_day(datetime.now())
+    greeting_day        = get_part_of_the_day(datetime.now())
+    placeholder_message = np.random.choice(placeholder_messages_list)
 
     registered_users = pd.read_csv('sample_users.csv') 
     
@@ -210,7 +221,8 @@ def login():
                            username=session['username_for_route'], 
                            login_form=login_form,
                            username_not_found=session['hidden_username_error'],
-                           incorrect_password=session['hidden_password_error']
+                           incorrect_password=session['hidden_password_error'],
+                           placeholder_message=placeholder_message
                            )
 
 @app.route('/profile/<username>', methods=["GET", "POST"])
@@ -220,7 +232,8 @@ def profile(username):
     if not session['user_logged_in']:
         return redirect(url_for('login'))
     
-    greeting_day = get_part_of_the_day(datetime.now())
+    greeting_day        = get_part_of_the_day(datetime.now())
+    placeholder_message = np.random.choice(placeholder_messages_list)
 
     registered_users = pd.read_csv('sample_users.csv')
     orders_data      = pd.read_csv('sample_data.csv')
@@ -269,5 +282,6 @@ def profile(username):
                            template_form=chatbot_form, 
                            greeting_day=greeting_day,
                            username=session['username_for_route'],
-                           user_data=user_data 
+                           user_data=user_data,
+                           placeholder_message=placeholder_message 
                            )

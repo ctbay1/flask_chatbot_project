@@ -69,7 +69,7 @@
                 <form method="POST" id="chat_form">
                     {{ template_form.hidden_tag() }}
                     <p id="message_input_label">{{ template_form.message.label }}</p>
-                    {{ template_form.message(placeholder="Write something...", class="message_form_buttons") }}
+                    {{ template_form.message(placeholder=placeholder, class="message_form_buttons") }}
                     <p>{{ template_form.send(class="message_form_buttons") }}</p>
                 </form>
             </section>
