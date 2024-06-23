@@ -5,7 +5,6 @@
 }
 
 #login_form{
-    height: 50%;
     width: 50%;
     display: flex;
     flex-direction: column;
@@ -49,4 +48,11 @@
 .warning_messages{
     color: red;
     font-weight: 700;
+}
+
+@media only screen and (max-width: 768px){
+    #login_form{
+        height: auto;
+        width: 80%;
+    }
 }

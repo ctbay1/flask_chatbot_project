@@ -62,7 +62,7 @@ nav li{
 }
 
 #site-name{
-    width: 40%;
+    width: 30%;
     text-align:center;
     font-size: 2.8rem;
 }
@@ -83,7 +83,7 @@ nav li{
 
 .nav_profile_buttons{
     margin: 0;
-    width: 12.5%;
+    width: 15%;
     height: 80%;
     border-radius: 0.25rem;
     color: white;
@@ -107,7 +107,7 @@ nav li{
 #profile{
     border: solid #193052 0.25rem;
     background-color: #193052;
-    
+
 }
 
 #cart{
@@ -283,7 +283,7 @@ main{
 h1,h2,h3,h4,h5,h6{
     font-weight: 700;
     margin: 1.5rem;
-    
+
 }
 
 h1{
@@ -301,11 +301,11 @@ h2.project_title{
 h3 {
     font-size: 2rem;
 }
-  
+
 h4, h5 {
     font-size: 1.8rem;
 }
-  
+
 h6{
     font-size: 1.6rem;
 }
@@ -318,3 +318,105 @@ li{
     font-size: 2rem;
 }
 /************************/
+
+@media only screen and (max-width: 768px){
+
+    p{
+        font-size: 1.4rem;
+    }
+
+    h2{
+        font-size: 1.8rem;
+    }
+
+    nav{
+        height: 5rem;
+        top: 3rem;
+    }
+
+    nav ul{
+        justify-content: center;
+    };
+
+    #chatbot_icon{
+        width: 3rem;
+    }
+
+    #profile{
+        width: 20%;
+    }
+
+    #cart{
+        width: 20%;
+    }
+
+    #chatbot_button{
+        width: 100%;
+        position: fixed;
+        top: 50%;
+        height: 5rem;
+        background-color: black;
+        border: black solid 0.75rem;
+    }
+
+    #chatbot_button img{
+        margin-left: 1rem;
+    }
+
+    .nav_profile_buttons img{
+        width: 2rem;
+        margin: 0;
+    }
+
+    .nav_profile_buttons{
+        width: 20%;
+    }
+
+    main{
+        top: 8rem;
+        height: calc(100% - 8rem);
+    }
+
+    .section_container{
+        width: 100%;
+        height: calc(50% - 5rem);
+        position: relative;
+    }
+
+    #chatbot_container{
+        width: 100%;
+        height: 50%;
+        float: none;
+        position: relative;
+        top: 5rem;
+    }
+
+    #categories_section{
+        width: 50%;
+    }
+
+    #categories_section h2{
+        font-size: 1.8rem;
+    }
+
+    #categories_section li{
+        font-size: 1.6rem;
+    }
+
+    .nav_profile_buttons a p{
+        display: none;
+    }
+
+    #site-name{
+        height: 3rem;
+        width: 100%;
+        font-size: 1.8rem;
+        position: fixed;
+        top: 0;
+        background-color: black;
+    }
+
+    #categories_icon{
+        width: 2rem;
+    }
+}

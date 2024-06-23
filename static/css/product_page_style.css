@@ -56,3 +56,21 @@ html{
 .product_description p{
     font-size: 1.8rem;
 }
+
+@media only screen and (max-width: 768px){
+
+    .product_container{
+        height: 90%;
+    }
+
+    .product_description h1{
+        font-size: 1.8rem;
+    }
+    .product_description p{
+        font-size: 1.4rem;
+    }
+
+    .product_detail{
+        height: 90%;
+    }
+}

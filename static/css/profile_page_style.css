@@ -98,3 +98,22 @@
     border: black solid 0.5rem;
     border-radius: 0.5rem;
 }
+
+@media only screen and (max-width: 768px){
+    .profile_picture{
+        width: 20%;
+    }
+
+    .product_container{
+        width: auto;
+        border: none;
+    }
+
+    .order_details{
+        height: auto;
+    }
+
+    #log_out_form{
+        font-size:unset;
+    }
+}

@@ -68,3 +68,24 @@
     background-color: black;
     color: white;
 }
+
+@media only screen and (max-width: 768px){
+    .order_total{
+        float: none;
+        width: auto;
+    }
+
+    .product_container{
+        width: auto;
+        float: none;
+        height: 60%;
+    }
+
+    .product_container h2{
+        font-size: 1.6rem;
+    }
+
+    .quantity_selector{
+        font-size: 1.4rem;
+    }
+}

@@ -26,3 +26,9 @@ html{
     max-width: 100%;
     height: auto;
 }
+
+@media only screen and (max-width: 768px){
+    .product_item {
+        width: 12rem;
+    }
+}
